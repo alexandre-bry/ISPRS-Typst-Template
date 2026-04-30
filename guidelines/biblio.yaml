@@ -1,0 +1,139 @@
+smith1987:
+  type: article
+  title: Close range photogrammetry for analyzing distressed trees
+  author: Smith, J.
+  date: 1987
+  page-range: 47-56
+  parent:
+    type: periodical
+    title: Photogrammetria
+    issue: 1
+    volume: 42
+michalis2008:
+  type: article
+  title: A Generic Model for Along-Track Stereo Sensors Using Rigorous Orbit Mechanics
+  author:
+  - Michalis, P.
+  - Dowman, I.
+  date: 2008
+  page-range: 303-309
+  parent:
+    type: periodical
+    title: Photogrammetric Engineering & Remote Sensing
+    issue: 3
+    volume: 74
+foerstner2016:
+  type: chapter
+  title: Photogrammetric Computer Vision
+  author:
+  - Förstner, W.
+  - Wrobel, B.
+  date: 2016
+  parent:
+    type: book
+    publisher:
+      name: Springer Nature
+      location: Cham
+smith2000:
+  type: article
+  title: Remote sensing to predict volcano outbursts
+  author: Smith, J.
+  date: 2000
+  page-range: 456-469
+  parent:
+    type: proceedings
+    title: Int. Arch. Photogramm. Remote Sens. Spatial Inf. Sci.
+    volume: XXVII-B1
+maas2017:
+  type: article
+  title: Classification under label noise using outdated maps
+  author:
+  - Maas, A.
+  - Rottensteiner, F.
+  - Heipke, C.
+  date: 2017
+  page-range: 215-222
+  serial-number:
+    doi: 10.5194/isprs-annals-IV-1-W1-215-2017
+  parent:
+    type: periodical
+    title: ISPRS Ann. Photogramm. Remote Sens. Spatial Inf. Sci.
+    volume: IV-1/W1
+chan2017:
+  type: article
+  title: Biomass burning related pollution and their contributions to the air quality in Hong Kong
+  author:
+  - Chan, K. L.
+  - Qin, K.
+  date: 2017
+  page-range: 29-36
+  serial-number:
+    doi: 10.5194/isprs-archives-XLII-2-W7-29-2017
+  parent:
+    type: periodical
+    title: Int. Arch. Photogramm. Remote Sens. Spatial Inf. Sci.
+    volume: XLII-2/W7
+dubayah2013:
+  type: misc
+  title: '{CMS: LiDAR-derived Biomass, Canopy Height and Cover, Sonoma County, California, 2013}'
+  author:
+  - Dubayah, R.O.
+  - Swatantran, A.
+  - Huang, W.
+  - Duncanson, L.
+  - Trang, H.
+  - Johnson, K.
+  - Dunne, J.O.
+  - Hurtt, G.C.
+  date: 2017
+  publisher: ORNL DAAC, Oak Ridge, Tennessee, USA
+  serial-number:
+    doi: 10.3334/ORNLDAAC/1523
+grass2017:
+  type: misc
+  title: '{Geographic Resources Analysis Support System (GRASS) Software}'
+  author: GRASS Development Team
+  date: 2017
+  publisher: Open Source Geospatial Foundation
+  url:
+    value: https://grass.osgeo.org/
+    date: 2017-09-20
+grass2015:
+  type: misc
+  title: '{Geographic Resources Analysis Support System (GRASS) Software, Version 6.4}'
+  author: GRASS Development Team
+  date: 2015
+  publisher: Open Source Geospatial Foundation
+  url:
+    value: https://grass.osgeo.org/
+    date: 2017-06-01
+lennert2017:
+  type: misc
+  title: '{Addon i.segment.stats. Geographic Resources Analysis Support System (GRASS) Software, Version 7.2}'
+  author:
+  - Lennert, M.
+  - GRASS Development Team
+  date: 2017
+  publisher: Open Source Geospatial Foundation
+  url:
+    value: https://grass.osgeo.org/grass7/manuals/addons/i.segment.stats.html
+    date: 2017-06-01
+gago2016:
+  type: misc
+  title: '{GRASS GIS in Grid Environment}'
+  author: Gago-Silva, A.
+  date: 2016
+  serial-number:
+    doi: 10.6084/m9.figshare.3188950
+smith1987rep:
+  type: report
+  title: Economic printing of color orthophotos
+  author: Smith, J.
+  date: 1987
+  publisher:
+    name: Kennedy Research Laboratories
+    location: Arlington, VA, USA
+  serial-number:
+    serial: KRL-1234
+  genre: Technical Report
+
