@@ -3,10 +3,14 @@
 #let isprs(
   // The paper's title.
   title: [Paper Title],
-  // An array of authors. For each author you can specify a name,
-  // organization, location, and email. Everything but
-  // but the name is optional.
+  // An array of authors. For each author you can specify a 'name', an
+  // 'email', and 'institutions' field (which can be a string or an
+  // array of strings) referencing the institution(s) they are
+  // affiliated with.
   authors: (),
+  // Institutions referenced by the authors, each with a name and a
+  // location.
+  institutions: (),
   // The paper's abstract. Can be omitted if you don't have one.
   abstract: none,
   // A list of keywords to display after the abstract.
@@ -136,41 +140,124 @@
       show std.title: set block(below: 8mm)
       std.title()
 
-      // Display the authors list.
-      let names = ()
-      if anonymous {
-        names = ("*********** (Anonymized)",)
-      } else {
-        for i in range(authors.len()) {
-          let info = authors.at(i)
-          if "name" in info {
-            names.push([#info.name#super(str(i + 1))])
-          } else {
-            panic("Each author must have a name.")
+      // Check that all institutions have the necessary fields.
+      let necessary-institution-fields = ("name", "location", "email-suffix")
+      for (institution-name, institution-info) in institutions.pairs() {
+        let missing-it = "The institution '" + institution-name + "' is missing the following field: "
+        for field in necessary-institution-fields {
+          if (not field in institution-info) {
+            panic(missing-it + field)
           }
         }
       }
-      names.join(", ")
 
-      // Display the authors' affiliations below.
-      let affiliations = ()
-      if anonymous {
-        affiliations = ("*********** (Anonymized)",)
-      } else {
-        for i in range(authors.len()) {
-          let info = authors.at(i)
-          let affiliation = ()
-          if "organization" in info { affiliation.push(info.organization) }
-          if "location" in info { affiliation.push(info.location) }
-          if "email" in info { affiliation.push(link("mailto:" + info.email, info.email)) }
-          if affiliation.len() > 0 {
-            affiliations.push([#super(str(i + 1)) #affiliation.join([ -- ])])
+      // Check that all authors have the necessary fields and that their institutions are valid.
+      let necessary-author-fields = ("name", "email", "institutions")
+      let authors-formatted = ()
+      for author in authors {
+        let missing-it = "An author is missing the following field: "
+        for field in necessary-author-fields {
+          if (not field in author) {
+            panic(missing-it + field)
           }
         }
+        if type(author.institutions) == str {
+          author.institutions = (author.institutions,)
+        }
+        let insts = author.institutions
+        if type(insts) != array {
+          panic("The institutions field of each author must be a string or an array of strings.")
+        }
+        for inst in insts {
+          if not inst in institutions {
+            panic("The institutions '" + inst + "' referenced by an author is not defined in the institutions array.")
+          }
+        }
+
+        authors-formatted.push(author)
       }
-      if affiliations.len() > 0 {
+
+      let names-content = ()
+      let institutions-content = ()
+
+      if anonymous {
+        names-content += ("*********** (Anonymized)",)
+        institutions-content += ("*********** (Anonymized)",)
+      } else {
+        // Assign a number to each institution
+        let institutions-numbers = (:)
+        for institution-name in institutions.keys() {
+          institutions-numbers.insert(institution-name, institutions-numbers.len() + 1)
+        }
+
+        // Connect institutions to authors
+        let authors-superscripts = ()
+        let institutions-emails = (:)
+        for author in authors-formatted {
+          let insts = author.institutions
+          let found-email-institution = false
+          let author-superscripts = ()
+          for inst in insts {
+            // Check that the author email ends with the correct suffix for the institution
+            let inst-email-suffix = institutions.at(inst).at("email-suffix")
+            if (not found-email-institution and author.email.ends-with(inst-email-suffix)) {
+              found-email-institution = true
+              if inst in institutions-emails {
+                institutions-emails.at(inst) += (author.email,)
+              } else {
+                institutions-emails.insert(inst, (author.email,))
+              }
+            }
+
+            author-superscripts.push(str(institutions-numbers.at(inst)))
+          }
+          authors-superscripts.push(author-superscripts)
+
+          if (not found-email-institution) {
+            panic(
+              "Could not find an institution for the author '"
+                + author.name
+                + "' matching their email suffix among their listed institutions.",
+            )
+          }
+        }
+
+        // Display the authors list.
+        for i in range(authors.len()) {
+          let name-content = []
+          name-content += authors.at(i).name
+          name-content += super(authors-superscripts.at(i).join(","))
+          names-content.push(name-content)
+        }
+
+
+        // Display the authors' affiliations below.
+        for inst-key in institutions.keys() {
+          let inst-contents = ()
+          let inst-info = institutions.at(inst-key)
+          inst-contents.push(inst-info.at("name"))
+          inst-contents.push(inst-info.at("location"))
+          let inst-email-suffix = inst-info.email-suffix
+          let inst-emails = ()
+          for email in institutions-emails.at(inst-key) {
+            if not email.ends-with(inst-email-suffix) {
+              panic("Email assigned to an insitution does not end with the institution's email suffix.")
+            }
+            inst-emails.push(email.slice(0, email.len() - inst-email-suffix.len()))
+          }
+          let inst-emails-joined = inst-emails.join(", ")
+          if inst-emails.len() >= 2 {
+            inst-emails-joined = "(" + inst-emails-joined + ")"
+          }
+          inst-contents.push([#inst-emails-joined#inst-email-suffix])
+          let inst-content = [#super(str(institutions-numbers.at(inst-key))) #inst-contents.join([ -- ])]
+          institutions-content.push(inst-content)
+        }
+      }
+      names-content.join(", ")
+      if institutions-content.len() > 0 {
         add-line-space()
-        [#affiliations.join(linebreak())]
+        institutions-content.join(linebreak())
       }
     },
   )

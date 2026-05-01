@@ -1,5 +1,7 @@
 #import "@local/magic-isprs:0.1.0": isprs
 
+#let anonymous = sys.inputs.at("anonymous", default: "false") == "true"
+
 #show: isprs.with(
   title: [Guidelines for Authors preparing a Full Paper to be submitted to ISPRS Events],
   abstract: [
@@ -11,33 +13,55 @@
   authors: (
     (
       name: "Orhan Altan",
-      organization: [ITU, Civil Engineering Faculty],
-      location: [80626 Maslak Istanbul, Turkey],
       email: "oaltan@itu.edu.tr",
+      institutions: "itu",
     ),
     (
       name: "Ian Dowman",
-      organization: [Dept. of Geomatic Engineering, University College London],
-      location: [Gower Street, London, WC1E 6BT UK],
       email: "idowman@ge.ucl.ac.uk",
+      institutions: "ucl",
     ),
     (
       name: "Florent Lafarge",
-      organization: [Université Côte d’Azur, INRIA],
-      location: [Sophia-Antipolis, France],
       email: "florent.lafarge@inria.fr",
+      institutions: "inria",
     ),
     (
       name: "Clément Mallet",
-      organization: [Univ. Gustave Eiffel, IGN-ENSG, LaSTIG],
-      location: [Saint-Mandé, France],
       email: "clement.mallet@ign.fr",
+      institutions: "lastig",
     ),
     (
       name: "Christian Heipke",
-      organization: [Institute of Photogrammetry and GeoInformation, Leibniz Universität],
-      location: [Hannover, Germany],
       email: "heipke@ipi.uni-hannover.de",
+      institutions: "leibniz",
+    ),
+  ),
+  institutions: (
+    itu: (
+      name: [ITU, Civil Engineering Faculty],
+      location: [80626 Maslak Istanbul, Turkey],
+      email-suffix: "@itu.edu.tr",
+    ),
+    ucl: (
+      name: [Dept. of Geomatic Engineering, University College London],
+      location: [Gower Street, London, WC1E 6BT UK],
+      email-suffix: "@ge.ucl.ac.uk",
+    ),
+    inria: (
+      name: [Université Côte d'Azur, INRIA],
+      location: [Sophia-Antipolis, France],
+      email-suffix: "@inria.fr",
+    ),
+    lastig: (
+      name: [Univ. Gustave Eiffel, IGN-ENSG, LaSTIG],
+      location: [Saint-Mandé, France],
+      email-suffix: "@ign.fr",
+    ),
+    leibniz: (
+      name: [Institute of Photogrammetry and GeoInformation, Leibniz Universität],
+      location: [Hannover, Germany],
+      email-suffix: "@ipi.uni-hannover.de",
     ),
   ),
   keywords: (
@@ -51,7 +75,7 @@
   acknowledgements: include "acknowledgements.typ",
   bibliography: bibliography("biblio.yaml"),
   appendix: include "appendix.typ",
-  anonymous: true,
+  anonymous: anonymous,
 )
 
 = Manuscript

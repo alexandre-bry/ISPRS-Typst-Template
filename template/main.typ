@@ -1,4 +1,4 @@
-#import "../src/lib.typ": isprs
+#import "@local/magic-isprs:0.1.0": isprs
 
 #show: isprs.with(
   title: [Simple Example of a Full Paper Submitted to ISPRS Events],
@@ -6,15 +6,30 @@
   authors: (
     (
       name: "Lorem Ipsum",
-      organization: [Department of Geomatics, Very Technical University],
-      location: [City, Country],
       email: "lipsum@verytechnical.edu",
+      institutions: ("vtu", "uon"),
     ),
     (
       name: "Dolor Sit Amet",
-      organization: [Insitute of Photogrammetry, University of Nowhere],
-      location: [Somewhere, Country],
       email: "dolor.sit.amet@nowhere.edu",
+      institutions: "uon",
+    ),
+    (
+      name: "Consectetur Adipiscing",
+      email: "consectetur.adipiscing@nowhere.edu",
+      institutions: "uon",
+    ),
+  ),
+  institutions: (
+    vtu: (
+      name: [Department of Geomatics, Very Technical University],
+      location: [City, Country],
+      email-suffix: "@verytechnical.edu",
+    ),
+    uon: (
+      name: [Institute of Photogrammetry, University of Nowhere],
+      location: [Somewhere, Country],
+      email-suffix: "@nowhere.edu",
     ),
   ),
   keywords: (

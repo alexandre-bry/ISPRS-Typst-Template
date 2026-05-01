@@ -11,9 +11,12 @@ The template exports the isprs function with the following arguments:
 - `title`: The title of the paper.
 - `authors`: An array of authors, each author is a dictionary with the following keys:
     - `name`: The name of the author.
-    - `organization`: The affiliation of the author.
-    - `location`: The location of the affiliation.
     - `email`: The email of the author.
+    - `institutions`: An array of institutions the author is affiliated with, each institution is a string that corresponds to a key in the `institutions` dictionary.
+- `institutions`: A dictionary of institutions, where the key is the institution identifier and the value is a dictionary with the following keys:
+    - `name`: An array of lines for the name of the institution.
+    - `location`: An array of lines for the location of the institution.
+    - `email-suffix`: The email suffix for the institution, used to check that the author email is valid for at least one of their institutions.
 - `abstract`: The abstract of the paper.
 - `keywords`: An array of keywords.
 - `acknowledgements`: The acknowledgements, if any.
