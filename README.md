@@ -34,6 +34,12 @@ The template exports the isprs function with the following arguments:
 >
 > More information about this in the [Issues section](#issues) below
 
+## Use the template
+
+To use this template, you can either copy the content of the `src` folder into your project and import the necessary files, or you can install it as a local package.
+See [these explanations](https://github.com/typst/packages/blob/main/README.md#local-packages) for more details about local packages.
+This is only a temporary solution until the template is published on Typst Universe.
+
 ## Issues
 
 - Level 3 headings (h3) are supposed to be inline in the ISPRS format.
