@@ -24,8 +24,26 @@ The template exports the isprs function with the following arguments:
 - `appendix`: The content of the appendix, if any.
 - `anonymous`: A boolean indicating whether the paper should be anonymized for review. If true, the authors and acknowledgements will be hidden.
 
+> ![IMPORTANT]
+> For now, if you split your paper into multiple files and include them in the main file, you need to add this configuration in each of the included files to make sure that the formatting is correct:
+>
+> ```typst
+> #import "@local/magic-isprs:0.1.0": isprs-heading
+> #show: isprs-heading
+> ```
+>
+> More information about this in the [Issues section](#issues) below
+
 ## Issues
 
+- Level 3 headings (h3) are supposed to be inline in the ISPRS format.
+  This template implements this, but the implementation is a bit hacky and sometimes does not work as expected.
+  If the h3 heading is at an inner scope, it will not be inline (there will be a line break after the heading).
+  This happens for example when including a file that contains an h3 heading.
+  To solve this issue, you can use `#show: isprs-heading` in the scope of this h3 heading, which will apply the inline style to the h3 heading.
+  This is not ideal, but it is the best solution I found for now.
+  Another solution is to never have a blank line after an h3 heading and start the paragraph in the next line.
+  This will work but is prone to errors.
 - Bibliography:
     - A [custom bibliography style](./src/custom-isprs.csl) was implemented in the Citation Style Language (CSL) format to try to reproduce the one used in the official templates.
       However, it may contain some errors.

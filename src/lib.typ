@@ -1,3 +1,89 @@
+// Default line spacing and paragraph spacing.
+#let line-space = 4.4mm
+#let add-line-space() = v(line-space, weak: true)
+
+
+#let isprs-heading(body) = {
+  // Remove the linebreak after h3 headings
+  show: doc => {
+    let i = 0
+    let elements = doc.children
+    while i < elements.len() {
+      if elements.at(i).func() == heading {
+        elements.at(i)
+        let j = i + 1
+        // For whatever reason the depth of the heading is not accessible there but accessible in the while loop
+        let depth = none
+        while (
+          j < elements.len() and elements.at(j).func() in (linebreak, parbreak, [ ].func())
+        ) {
+          depth = elements.at(i).depth
+          // Only work with heading of depth 3
+          if (depth != 3) { break }
+          j += 1
+        }
+        if j >= elements.len() { break }
+        if (depth == 3) {
+          [ ]
+        }
+        i = j
+      }
+      if (elements.at(i).func() != heading) {
+        elements.at(i)
+        i += 1
+      }
+    }
+  }
+
+  body
+}
+
+
+/// Formats the content of a heading according to the ISPRS style. It also takes care of the numbering, which is a bit tricky because of the appendix.
+///
+/// - it (heading): the heading in a show rule
+/// - force-numbering (any): what to force the numbering to be, or false to keep it as is. This is useful for the appendix.
+/// ->
+#let format-heading(it, force-numbering: false) = {
+  // Find out the final number of the heading counter.
+  let levels = counter(heading).get()
+
+  let numbering-func = if force-numbering != false { force-numbering } else { it.numbering }
+  let number = if (numbering-func == none) { none } else { numbering(numbering-func, ..levels) }
+
+  let horizontal-space = if (it.level == 1) {
+    3mm
+  } else if (it.level == 2) {
+    2mm
+  } else if (it.level == 3) {
+    4mm
+  } else {
+    2mm
+  }
+  let postfix = if (it.level == 3) {
+    [:]
+  } else {
+    []
+  }
+
+  let content = if number != none {
+    [#number#h(horizontal-space)#it.body#postfix]
+  } else {
+    [#it.body#postfix]
+  }
+
+  if (it.level == 1) {
+    set align(center)
+    block(content, spacing: line-space, sticky: true)
+  } else if (it.level == 2) {
+    set align(start)
+    block(content, spacing: line-space, sticky: true)
+  } else {
+    content
+  }
+}
+
+
 // This function gets your whole document as its `body` and formats
 // it as an article in the style of the ISPRS.
 #let isprs(
@@ -10,7 +96,7 @@
   authors: (),
   // Institutions referenced by the authors, each with a name and a
   // location.
-  institutions: (),
+  institutions: (:),
   // The paper's abstract. Can be omitted if you don't have one.
   abstract: none,
   // A list of keywords to display after the abstract.
@@ -30,7 +116,11 @@
   let authors-string = if anonymous {
     "Anonymous"
   } else {
-    authors.map(author => author.name).join(", ")
+    if (authors.len() > 0) {
+      authors.map(author => author.name).join(", ")
+    } else {
+      "No authors"
+    }
   }
   set document(title: title, author: authors-string)
 
@@ -39,10 +129,6 @@
 
   // Enums numbering
   set enum(numbering: "1.")
-
-  // Default line spacing and paragraph spacing.
-  let line-space = 4.4mm
-  let add-line-space() = v(line-space, weak: true)
 
   // Show URLs in blue.
   show link: set text(fill: blue)
@@ -92,8 +178,15 @@
   }
 
   // Configure lists.
-  set enum(indent: 13.8pt, body-indent: 11.5pt)
-  set list(indent: 13.8pt, body-indent: 11.5pt)
+  let lists-shorter = true
+  let list-indent = 13.8pt
+  let list-body-indent = 11.5pt
+  if lists-shorter {
+    list-indent = 6pt
+    list-body-indent = 4pt
+  }
+  set enum(indent: list-indent, body-indent: list-body-indent)
+  set list(indent: list-indent, body-indent: list-body-indent)
   show enum: it => {
     it
   }
@@ -107,21 +200,7 @@
   show heading.where(level: 2): set heading(numbering: "1.1")
   show heading.where(level: 3): set heading(numbering: "1.1.1")
   show heading: it => {
-    // Find out the final number of the heading counter.
-    let levels = counter(heading).get()
-
-    let number = if (it.numbering == none) { none } else { numbering(it.numbering, ..levels) }
-
-    if (it.level == 1) {
-      set align(center)
-      [#add-line-space()#number#h(3mm)#it.body#add-line-space()]
-    } else if (it.level == 2) {
-      [#add-line-space()#number#h(2mm)#it.body#add-line-space()]
-    } else if (it.level == 3) {
-      [#add-line-space()#number#h(4mm)#it.body:]
-    } else {
-      it
-    }
+    format-heading(it)
   }
 
   // Style bibliography.
@@ -287,35 +366,7 @@
     },
   )
 
-  show: doc => {
-    let i = 0
-    let elements = doc.children
-    while i < elements.len() {
-      if elements.at(i).func() == heading {
-        elements.at(i)
-        let j = i + 1
-        // For whatever reason the depth of the heading is not accessible there but accessible in the while loop
-        let depth = none
-        while (
-          j < elements.len() and elements.at(j).func() in (linebreak, parbreak, [ ].func())
-        ) {
-          depth = elements.at(i).depth
-          // Only work with heading of depth 3
-          if (depth != 3) { break }
-          j += 1
-        }
-        if j >= elements.len() { break }
-        if (depth == 3) {
-          [ ]
-        }
-        i = j
-      }
-      if (elements.at(i).func() != heading) {
-        elements.at(i)
-        i += 1
-      }
-    }
-  }
+  show: isprs-heading
 
   // Display the paper's contents.
   body
@@ -331,14 +382,16 @@
   }
 
   // Display bibliography.
-  heading("References", level: 1, numbering: none)
-  bibliography
+  if (bibliography != none) {
+    heading("References", level: 1, numbering: none)
+    bibliography
+  }
 
   // Display appendix, if any.
   if (appendix != none) {
     heading("Appendix", level: 1, numbering: none)
     show heading: it => {
-      it.body
+      format-heading(it, force-numbering: none)
     }
     appendix
   }
