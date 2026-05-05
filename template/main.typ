@@ -1,5 +1,4 @@
-// #import "@local/magic-isprs:0.1.0": isprs, isprs-heading
-#import "../src/lib.typ": isprs, isprs-heading
+#import "@local/magic-isprs:0.1.0": isprs, isprs-heading
 
 #show: isprs.with(
   title: [Simple Example of a Full Paper Submitted to ISPRS Events],
