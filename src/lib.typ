@@ -139,6 +139,8 @@
     v(3mm, weak: true)
     it
   }
+  set figure.caption(separator: ". ")
+
 
   // Configure the page and multi-column properties.
   set columns(gutter: 6mm)
