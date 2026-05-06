@@ -384,6 +384,10 @@
   // Display bibliography.
   if (bibliography != none) {
     heading("References", level: 1, numbering: none)
+
+    // Fix for this issue: https://github.com/typst/typst/issues/5898
+    show std.bibliography: set block(width: 100%)
+    set par(justify: true)
     bibliography
   }
 
