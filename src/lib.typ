@@ -205,6 +205,8 @@
 
   // Style bibliography.
   set std.bibliography(title: none, style: "custom-isprs.csl")
+  // Fix for this issue: https://github.com/typst/typst/issues/5898
+  show std.bibliography: set block(width: 100%)
 
   // Display the paper's title and authors at the top of the page,
   // spanning all columns (hence floating at the scope of the
@@ -385,8 +387,6 @@
   if (bibliography != none) {
     heading("References", level: 1, numbering: none)
 
-    // Fix for this issue: https://github.com/typst/typst/issues/5898
-    show std.bibliography: set block(width: 100%)
     set par(justify: true)
     bibliography
   }
