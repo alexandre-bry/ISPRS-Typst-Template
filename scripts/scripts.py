@@ -67,15 +67,15 @@ def copy_files(
         "thumbnail.png",
         "src/**",
         "template/**",
-        "comparison/**",
+        "pdf/**",
     ]
     for pattern in files_to_copy:
         for file in repo_root.glob(pattern):
             if file.is_file():
-                # If the file is a Typst file, replace the regex "@local/magic-isprs:<version>" with the actual package "@preview/magic-isprs:{version}"
                 target_file = target_dir / file.relative_to(repo_root)
                 target_file.parent.mkdir(parents=True, exist_ok=True)
-                if file.suffix == ".typ":
+                if file.suffix == ".typ" or file.name == "README.md":
+                    # If the file is a Typst file or README.md, replace the regex "@local/magic-isprs:<version>" with the actual package "@preview/magic-isprs:{version}"
                     content = file.read_text()
 
                     content = re.sub(
@@ -123,24 +123,30 @@ def render_pdfs(
 
     # Render the PDFs
     typst_files = [
-        repo_root / "guidelines" / "main.typ",
-        repo_root / "template" / "main.typ",
+        {
+            "input": repo_root / "guidelines" / "main.typ",
+            "output": repo_root / "pdf" / "Typst-guidelines.pdf",
+        },
+        {
+            "input": repo_root / "template" / "main.typ",
+            "output": repo_root / "pdf" / "Typst-template.pdf",
+        },
     ]
     for typst_file in typst_files:
-        if typst_file.exists():
-            output_pdf = typst_file.with_suffix(".pdf")
-            output_anonymous_pdf = typst_file.with_name(
-                typst_file.stem + "-anonymous.pdf"
+        if typst_file["input"].exists():
+            output_pdf = typst_file["output"]
+            output_anonymous_pdf = typst_file["output"].with_name(
+                typst_file["output"].stem + "-anonymous.pdf"
             )
             print(
-                f"Rendering {typst_file} to {output_pdf} and {output_anonymous_pdf}..."
+                f"Rendering {typst_file['input']} to {output_pdf} and {output_anonymous_pdf}..."
             )
             # Use the typst CLI to render the PDFs
             subprocess.run(
                 [
                     "typst",
                     "compile",
-                    str(typst_file),
+                    str(typst_file["input"]),
                     str(output_pdf),
                     "--root",
                     str(repo_root),
@@ -152,7 +158,7 @@ def render_pdfs(
                 [
                     "typst",
                     "compile",
-                    str(typst_file),
+                    str(typst_file["input"]),
                     str(output_anonymous_pdf),
                     "--root",
                     str(repo_root),
