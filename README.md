@@ -3,6 +3,26 @@
 > [!IMPORTANT]
 > This is an unofficial template that tries to follow the guidelines of the official ISPRS templates in Word and LaTeX.
 > These official documents are available in the [appendix 5 of the Orange book](https://www.isprs.org/documents/orangebook/app5.aspx).
+> Local copies of these templates are also available in [`comparison`](./comparison) for reference.
+
+## Usage
+
+### Normal usage
+
+You can use this template in the Typst web app by clicking Start from template on the dashboard and searching for `magic-isprs`.
+
+Alternatively, you can use the CLI to kick this project off using the command
+
+```typst
+typst init @preview/magic-isprs
+```
+
+Typst will create a new directory with all the files needed to get you started.
+
+### Development
+
+To use this template locally and modify it, you can install it as a local package.
+See [these explanations](https://github.com/typst/packages/blob/main/README.md#local-packages) for more details about local packages.
 
 ## Configuration
 
@@ -34,12 +54,6 @@ The template exports the isprs function with the following arguments:
 >
 > More information about this in the [Issues section](#issues) below
 
-## Use the template
-
-To use this template, you can either copy the content of the `src` folder into your project and import the necessary files, or you can install it as a local package.
-See [these explanations](https://github.com/typst/packages/blob/main/README.md#local-packages) for more details about local packages.
-This is only a temporary solution until the template is published on Typst Universe.
-
 ## Issues
 
 - Level 3 headings (h3) are supposed to be inline in the ISPRS format.
@@ -60,9 +74,18 @@ This is only a temporary solution until the template is published on Typst Unive
       There is no workaround for this, so I recommend using the [Hayagriva bibliography management format](https://github.com/typst/hayagriva) instead of BibTeX.
       It is very easy to translate a .bib file into a .yaml file with their CLI tool, and you can then add the `volume` field as a string in the .yaml file, which will prevent the bug from happening.
     - The `howpublished` field in BibTeX is not supported by the bibliography implementation in Typst, so it is recommended to use the other fields instead: `url`, `urldate`, `publisher`, `location`, etc.
+- There are differences between the LaTeX template and the Word template, so it is not always clear which one to follow, since the Word is the reference but most people probably use the LaTeX template.
+  So this template will not be perfectly coherent with both templates, but it should be reasonably close to both of them.
 
 ## TODO
 
 - Check whether the formatting of the bibliography entries is coherent with the LaTeX template.
 - Publish the template on Typst Universe once it is reasonably complete.
 - Add a better comparison between the output of this template and the official templates, to check for any formatting errors.
+
+## Inspiration
+
+The structure and README of this template were inspired by these two templates:
+
+- [charged-ieee](https://github.com/typst/templates/tree/main/charged-ieee)
+- [clear-iclr](https://github.com/daskol/typst-templates/tree/main/iclr)

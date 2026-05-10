@@ -1,5 +1,7 @@
 #import "@local/magic-isprs:0.1.0": isprs, isprs-heading
 
+#let anonymous = sys.inputs.at("anonymous", default: "false") == "true"
+
 #show: isprs.with(
   title: [Simple Example of a Full Paper Submitted to ISPRS Events],
   abstract: include "content/abstract.typ",
@@ -42,7 +44,7 @@
   acknowledgements: include "content/acknowledgements.typ",
   bibliography: bibliography("biblio.yaml"),
   appendix: include "content/appendix.typ",
-  anonymous: false,
+  anonymous: anonymous,
 )
 
 
