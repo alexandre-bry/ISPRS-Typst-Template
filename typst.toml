@@ -3,7 +3,7 @@ name = "magic-isprs"
 version = "0.1.0"
 entrypoint = "src/lib.typ"
 authors = ["Alexandre Bry"]
-license = "MIT"
+license = "MIT-0"
 description = "Paper for the International Society for Photogrammetry and Remote Sensing (ISPRS)."
 repository = "https://github.com/alexandre-bry/ISPRS-Typst-Template"
 keywords = ["template", "isprs", "paper"]
@@ -15,7 +15,7 @@ disciplines = [
     "geology",
     "physics",
 ]
-exclude = ["examples/"]
+exclude = ["template"]
 
 [template]
 path = "template"
