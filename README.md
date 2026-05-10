@@ -73,7 +73,7 @@ The template exports the isprs function with the following arguments:
     - At the time of writing this, there is a [bug in Typst](https://github.com/typst/hayagriva/issues/463) that loses the `volume` field in the BibTeX entries if it is not an integer.
       There is no workaround for this, so I recommend using the [Hayagriva bibliography management format](https://github.com/typst/hayagriva) instead of BibTeX.
       It is very easy to translate a .bib file into a .yaml file with their CLI tool, and you can then add the `volume` field as a string in the .yaml file, which will prevent the bug from happening.
-    - The `howpublished` field in BibTeX is not supported by the bibliography implementation in Typst, so it is recommended to use the other fields instead: `url`, `urldate`, `publisher`, `location`, etc.
+    - [The `howpublished` field in BibTeX is not supported by the bibliography implementation in Typst](https://forum.typst.app/t/why-do-note-and-howpublished-fields-from-bibtex-not-show-up-in-bibliography-list/4149/3), so it is recommended to use the other fields instead: `url`, `urldate`, `publisher`, `location`, etc.
 - There are differences between the LaTeX template and the Word template, so it is not always clear which one to follow, since the Word is the reference but most people probably use the LaTeX template.
   So this template will not be perfectly coherent with both templates, but it should be reasonably close to both of them.
 

@@ -15,7 +15,7 @@ disciplines = [
     "geology",
     "physics",
 ]
-exclude = ["template"]
+exclude = ["comparison"]
 
 [template]
 path = "template"
