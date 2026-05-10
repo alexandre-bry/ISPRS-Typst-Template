@@ -125,7 +125,7 @@
   set document(title: title, author: authors-string)
 
   // Set the body font.
-  set text(font: "Times New Roman", size: 9pt, lang: "en")
+  set text(font: ("Times New Roman", "TeX Gyre Termes"), size: 9pt, lang: "en")
 
   // Enums numbering
   set enum(numbering: "1.")

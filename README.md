@@ -50,6 +50,9 @@ This is only a temporary solution until the template is published on Typst Unive
   This is not ideal, but it is the best solution I found for now.
   Another solution is to never have a blank line after an h3 heading and start the paragraph in the next line.
   This will work but is prone to errors.
+- Font: The official ISPRS templates use the Times New Roman font, but [this font is not available by default in Typst due to licensing issues](https://github.com/typst/typst/issues/416).
+  To actually use Times New Roman, you need to install it on your system, for example using [this cask](https://formulae.brew.sh/cask/font-times-new-roman) with brew.
+  When Times New Roman is not installed, the template will use TeX Gyre Termes, which is a free font that is very similar to Times New Roman and is available by default in Typst.
 - Bibliography:
     - A [custom bibliography style](./src/custom-isprs.csl) was implemented in the Citation Style Language (CSL) format to try to reproduce the one used in the official templates.
       However, it may contain some errors.
