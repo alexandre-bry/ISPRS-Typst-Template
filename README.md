@@ -24,7 +24,7 @@ The template exports the isprs function with the following arguments:
 - `appendix`: The content of the appendix, if any.
 - `anonymous`: A boolean indicating whether the paper should be anonymized for review. If true, the authors and acknowledgements will be hidden.
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > For now, if you split your paper into multiple files and include them in the main file, you need to add this configuration in each of the included files to make sure that the formatting is correct:
 >
 > ```typst
@@ -61,4 +61,5 @@ This is only a temporary solution until the template is published on Typst Unive
 ## TODO
 
 - Check whether the formatting of the bibliography entries is coherent with the LaTeX template.
-- Publish the template on Typst Universe once it is finished.
+- Publish the template on Typst Universe once it is reasonably complete.
+- Add a better comparison between the output of this template and the official templates, to check for any formatting errors.
